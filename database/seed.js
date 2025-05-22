@@ -1,7 +1,5 @@
 import { fakerEN_US as faker } from '@faker-js/faker'
+import { createClient } from '@supabase/supabase-js'
 
-const personName = faker.person.fullName()
-const personBio = faker.person.bio()
-
-console.log(personName)
-console.log(personBio)
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SERVICE_ROLE_KEY)
+console.log(supabase)
