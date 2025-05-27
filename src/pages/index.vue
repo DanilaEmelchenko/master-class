@@ -1,15 +1,13 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { supabase } from '@/lib/supabaseClient'
-
-const getProject = async () => {
+;(async () => {
   const { data, error } = await supabase.from('projects').select()
 
   if (error) console.log(error)
-  console.log('Projects ,', data)
-}
 
-await getProject()
+  return data
+})()
 </script>
 
 <template>
