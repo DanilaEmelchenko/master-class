@@ -1,43 +1,22 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { supabase } from '@/lib/supabaseClient'
-import { h, ref } from 'vue'
-import type { Tables } from '../../../database/database.types'
-import type { ColumnDef } from '@tanstack/vue-table'
-import DataTable from '@/components/ui/data-table/DataTable.vue'
-import { RouterLink } from 'vue-router'
+import { columns } from '@/utils/tableColumns/projectsColumns'
+import { projectsQuery, type Projects } from '@/utils/supaQueries'
 
-const projects = ref<Tables<'projects'>[] | null>(null)
-;(async () => {
-  const { data, error } = await supabase.from('projects').select()
+usePageStore().pageData.title = 'Projects'
+
+const projects = ref<Projects | null>(null)
+const getProjects = async () => {
+  const { data, error } = await projectsQuery
 
   if (error) console.log(error)
 
   projects.value = data
-})()
+}
 
-const columns: ColumnDef<Tables<'projects'>>[] = [
-  {
-    accessorKey: 'name',
-    header: () => h('div', { class: 'text-left' }, 'Name'),
-  },
-  {
-    accessorKey: 'status',
-    header: () => h('div', { class: 'text-left' }, 'Status'),
-  },
-  {
-    accessorKey: 'collaborators',
-    header: () => h('div', { class: 'text-left' }, 'Collaborators'),
-  },
-]
+await getProjects()
 </script>
 
 <template>
-  <DataTable v-if="projects" :columns="columns" :data="projects">
-    <template #cell-name="{ cell }">
-      <RouterLink :to="`/projects/${cell.row.original.slug}`">
-        {{ cell.getValue() }}
-      </RouterLink>
-    </template>
-  </DataTable>
+  <DataTable v-if="projects" :columns="columns" :data="projects" />
 </template>
