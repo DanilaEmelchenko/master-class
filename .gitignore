@@ -30,3 +30,7 @@ coverage
 *.tsbuildinfo
 
 .env
+
+
+auto-imports.d.ts
+components.d.ts
