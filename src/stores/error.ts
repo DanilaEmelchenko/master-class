@@ -21,8 +21,13 @@ export const useErrorStore = defineStore('error-store', () => {
     }
 
     activeError.value = error
-    activeError.value.statusCode = customCode || 500
+    ;(activeError.value as ExtendedPosgrestError).statusCode = customCode || 500
   }
 
-  return { activeError, setError, isCustomError }
+  const clearError = () => {
+    activeError.value = null
+    isCustomError.value = false
+  }
+
+  return { activeError, setError, isCustomError, clearError }
 })
