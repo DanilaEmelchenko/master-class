@@ -13,21 +13,21 @@ const filteredLinks = props.links.filter((link): link is LinkProp & { to: string
 </script>
 
 <template>
-  <RouterLink
-    exactActiveClass="text-primary bg-muted"
-    v-for="link in filteredLinks"
-    :key="link.title"
-    :to="link.to"
-    class="nav-link"
-  >
-    <iconify-icon :icon="link.icon"></iconify-icon>
-    <span class="hidden lg:block text-nowrap">{{ link.title }}</span>
-  </RouterLink>
-
-  <div class="nav-link cursor-pointer">
-    <!-- <iconify-icon :icon="link.icon"></iconify-icon>
-    <span class="hidden lg:block text-nowrap">{{ link.title }}</span> -->
-  </div>
+  <template v-for="link in links" :key="link.title">
+    <RouterLink
+      v-if="link.to"
+      exactActiveClass="text-primary bg-muted"
+      :to="link.to"
+      class="nav-link"
+    >
+      <iconify-icon :icon="link.icon"></iconify-icon>
+      <span class="hidden lg:block text-nowrap">{{ link.title }}</span>
+    </RouterLink>
+    <div v-else class="nav-link cursor-pointer">
+      <iconify-icon :icon="link.icon"></iconify-icon>
+      <span class="hidden lg:block text-nowrap">{{ link.title }}</span>
+    </div>
+  </template>
 </template>
 
 <style scoped>

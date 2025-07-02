@@ -24,6 +24,7 @@ const accountLinks = [
     to: '/profile',
     icon: 'lucide:user',
   },
+  { title: 'Chat', icon: 'lucide:message-circle' },
   {
     title: 'Settings',
     to: '/settings',
