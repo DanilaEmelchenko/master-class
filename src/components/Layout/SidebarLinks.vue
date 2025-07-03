@@ -9,7 +9,13 @@ const props = defineProps<{
   links: LinkProp[]
 }>()
 
-const filteredLinks = props.links.filter((link): link is LinkProp & { to: string } => !!link.to)
+const emits = defineEmits<{
+  actionClicked: [string]
+}>()
+
+const emitActionClicked = (linkTitle: string) => {
+  emits('actionClicked', linkTitle)
+}
 </script>
 
 <template>
@@ -23,7 +29,7 @@ const filteredLinks = props.links.filter((link): link is LinkProp & { to: string
       <iconify-icon :icon="link.icon"></iconify-icon>
       <span class="hidden lg:block text-nowrap">{{ link.title }}</span>
     </RouterLink>
-    <div v-else class="nav-link cursor-pointer">
+    <div v-else class="nav-link cursor-pointer" @click="emitActionClicked(link.title)">
       <iconify-icon :icon="link.icon"></iconify-icon>
       <span class="hidden lg:block text-nowrap">{{ link.title }}</span>
     </div>
