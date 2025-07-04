@@ -24,7 +24,6 @@ const accountLinks = [
     to: '/profile',
     icon: 'lucide:user',
   },
-  { title: 'Chat', icon: 'lucide:message-circle' },
   {
     title: 'Settings',
     to: '/settings',
@@ -36,9 +35,10 @@ const accountLinks = [
   },
 ]
 
-const exucuteAction = (linkTitle: string) => {
+const exucuteAction = async (linkTitle: string) => {
   if (linkTitle === 'Sign Out') {
-    //...
+    const { logout } = await import('@/utils/supaAuth')
+    await logout()
   }
 }
 </script>
