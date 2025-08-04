@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import { useFormErrors } from '@/composables/formErrors'
 import { login } from '@/utils/supaAuth'
+import { watchDebounced } from '@vueuse/core'
 
 const formData = ref({
   email: '',
@@ -11,6 +12,17 @@ const formData = ref({
 const { serverError, handleServerError, realtimeErrors, handleLoginForm } = useFormErrors()
 
 const router = useRouter()
+
+watchDebounced(
+  formData,
+  () => {
+    handleLoginForm(formData.value)
+  },
+  {
+    debounce: 1000,
+    deep: true,
+  },
+)
 
 const signin = async () => {
   const { error } = await login(formData.value)
